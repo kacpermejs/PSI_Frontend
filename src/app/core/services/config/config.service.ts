@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { HttpClient, HttpBackend } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 //Move this type to a shared folder
 export interface AppConfig {

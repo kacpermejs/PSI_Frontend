@@ -7,15 +7,18 @@ import { ConfigService } from '@core/services/config/config.service';
   selector: 'app-root',
   imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'PSI_Frontend';
 
   configService = inject(ConfigService);
-  env = this.configService.readConfig().Environment
 
   ngOnInit(): void {
-    console.log(`App is running in ${this.env} environment!`); 
+    this.configService
+      .setConfig()
+      .then(() =>
+        console.log(`App is running in ${this.configService.readConfig().Environment} environment!`)
+      );
   }
 }

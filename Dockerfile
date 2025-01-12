@@ -10,7 +10,7 @@ RUN npm run build
 
 # Stage 2
 FROM nginx:latest
-COPY --from=build /usr/local/app/dist/frontend/browser /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/psi-frontend/browser /usr/share/nginx/html
 
 # script for environment configuration loading
 COPY ./entrypoint.sh /usr/local/app/entrypoint.sh
