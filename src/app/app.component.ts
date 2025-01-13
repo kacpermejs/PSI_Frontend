@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+import { NavBarComponent } from '@core/components/nav-bar/nav-bar.component';
 import { ConfigService } from '@core/services/config/config.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, NavBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
