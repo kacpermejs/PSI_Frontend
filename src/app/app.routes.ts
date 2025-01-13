@@ -1,9 +1,18 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './features/page-not-found/page-not-found.component';
-import { HomePageComponent } from './features/home-page/home-page.component';
+import { managerRoleGuard } from '@core/guards/manager-role.guard';
+import { ForbiddenComponent } from './features/forbidden/forbidden.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: "/home", pathMatch: 'full' },
-  { path: 'home', component: HomePageComponent },
+  { path: '', redirectTo: '/events', pathMatch: 'full' },
+  { path: 'manager',
+    canActivate: [managerRoleGuard],
+    loadChildren: () =>
+      import('./features/manager/manager.routes').then((m) => m.MANAGER_ROUTES),
+  },
+  { path: 'events',
+    loadComponent: () => import('./features/client/client-events/client-events.component').then((m) => m.ClientEventsComponent)
+  },
+  { path: 'forbidden', component: ForbiddenComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
