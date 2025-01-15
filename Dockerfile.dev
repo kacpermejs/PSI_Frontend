@@ -8,9 +8,9 @@ COPY package*.json ./
 
 RUN npm install -g @angular/cli
 
-RUN npm install --include=dev
+RUN npm install
 
-COPY . .
+COPY entrypoint.dev.sh .
 
 EXPOSE 4200
 

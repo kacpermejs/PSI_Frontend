@@ -11,4 +11,4 @@ if [[ $ENVIRONMENT = "Production" ]]; then
    cp /usr/src/app/src/config/app-config.prod.json /usr/src/app/src/app-config.json
 fi
 
-ng serve --configuration development --host "0.0.0.0" --disable-host-check --poll 2000
+npm run dev

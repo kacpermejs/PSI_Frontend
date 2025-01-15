@@ -49,6 +49,11 @@
               "src/styles/styles.scss",
               "src/styles/fonts.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -123,6 +128,11 @@
               "src/styles/styles.scss",
               "src/styles/fonts.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "scripts": []
           }
         }

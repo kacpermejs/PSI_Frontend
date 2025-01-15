@@ -43,3 +43,4 @@ Thumbs.db
 
 # Generated config file for development with docker
 /src/app-config.json
+src/styles/output.scss
