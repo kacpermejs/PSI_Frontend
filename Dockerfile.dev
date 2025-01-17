@@ -6,9 +6,9 @@ ENV NODE_ENV development
 
 COPY package*.json ./
 
-RUN npm install -g @angular/cli
-
 RUN npm install
+
+COPY . .
 
 COPY entrypoint.dev.sh .
 
