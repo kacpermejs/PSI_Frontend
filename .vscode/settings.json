@@ -1,11 +1,4 @@
 {
   "html.format.wrapAttributes": "force-expand-multiline",
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "scss",
-    "css": "scss",
-    "scss": "scss"
-  },
-  "editor.quickSuggestions": {
-    "strings": true
-  }
+  "css.customData": [".vscode/tailwind.json"]
 }
