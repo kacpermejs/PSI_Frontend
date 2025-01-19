@@ -1,1 +1,19 @@
-<p>client-events works!</p>
+<div class="events-container">
+  @for (event of $events | async; track $index) {
+  <a
+    class="event-card"
+    [routerLink]="['/event', event.id]"
+  >
+    <img
+      class="event-thumbnail"
+      [src]="event.thumbnailUrl"
+      alt="Event Thumbnail"
+    />
+    <div class="event-content">
+      <h3 class="event-title">{{ event.title }}</h3>
+      <p class="event-date">Date: {{ event.eventStartDate | date:'longDate' }}</p>
+      <p class="event-description">Description: {{ event.description }}</p>
+    </div>
+  </a>
+  }
+</div>

@@ -1,3 +1,11 @@
 {
-  "html.format.wrapAttributes": "force-expand-multiline"
+  "html.format.wrapAttributes": "force-expand-multiline",
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "scss",
+    "css": "scss",
+    "scss": "scss"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  }
 }
