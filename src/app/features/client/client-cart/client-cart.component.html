@@ -1,0 +1,55 @@
+<div class="cart-container p-6 bg-gray-100 rounded-lg shadow-md">
+  <h2 class="text-2xl font-bold mb-4">Your Event Cart</h2>
+
+  <div *ngIf="cartItems.length; else emptyCart">
+    <div
+      *ngFor="let item of cartItems; let i = index"
+      class="cart-item flex items-center bg-white p-4 mb-4 rounded-lg shadow-sm"
+    >
+      <img
+        class="w-24 h-24 rounded-lg"
+        [src]="item.event.thumbnailUrl"
+        alt="Event Thumbnail"
+      />
+      <div class="ml-4 flex-grow">
+        <h3 class="text-lg font-semibold">{{ item.event.title }}</h3>
+        <p class="text-sm text-gray-600">{{ item.event.description }}</p>
+        <p class="text-sm text-gray-600">
+          Date: {{ item.event.eventStartDate | date: 'longDate' }}
+        </p>
+        <div class="mt-2">
+          <label for="quantity-{{ i }}" class="text-sm font-medium">
+            Quantity:
+          </label>
+          <input
+            id="quantity-{{ i }}"
+            type="number"
+            [(ngModel)]="item.quantity"
+            (change)="updateQuantity(i, item.quantity)"
+            class="ml-2 w-16 border rounded px-2"
+            min="1"
+          />
+        </div>
+      </div>
+      <button
+        (click)="removeItem(i)"
+        class="ml-4 px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600"
+      >
+        Remove
+      </button>
+    </div>
+
+    <div class="text-right mt-6">
+      <button
+        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyCart>
+    <p class="text-gray-600">Your cart is empty.</p>
+  </ng-template>
+</div>
+

@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
-import { NavBarComponent } from '@core/components/nav-bar/nav-bar.component';
-import { ConfigService } from '@core/services/config/config.service';
-import { HealthCheckService } from '@core/services/health-check/health-check.service';
+import {CommonModule} from '@angular/common';
+import {Component, inject, OnInit} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {NavBarComponent} from '@core/components/nav-bar/nav-bar.component';
+import {ConfigService} from '@core/services/config/config.service';
+import {HealthCheckService} from '@core/services/health-check/health-check.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   checkHealth(): void {
-    this.healthCheckService.checkHealth().subscribe( r => console.log('Health response:', r.status));
+    this.healthCheckService.checkHealth().subscribe(r => console.log('Health response:', r.status));
   }
 }
