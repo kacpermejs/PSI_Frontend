@@ -1,18 +1,23 @@
-<div class="events-container">
-  @for (event of $events | async; track $index) {
+<div class="container events-container">
+  @for (post of $events | async; track $index) {
   <a
-    class="event-card"
-    [routerLink]="['/event', event.id]"
+    class="card event-card"
+    (click)="goToEventDetail(post.id)"
   >
-    <img
+    <div class="event-content-container">
+      <img
       class="event-thumbnail"
-      [src]="event.thumbnailUrl"
+      [src]="post.thumbnailUrl"
       alt="Event Thumbnail"
-    />
-    <div class="event-content">
-      <h3 class="event-title">{{ event.title }}</h3>
-      <p class="event-date">Date: {{ event.eventStartDate | date:'longDate' }}</p>
-      <p class="event-description">Description: {{ event.description }}</p>
+      />
+      <div class="event-content">
+        <h3 class="event-title">{{ post.title }}</h3>
+        <p class="event-date">Date: {{ post.eventStartDate | date:'longDate' }}</p>
+        <p class="event-description">Description: {{ post.description }}</p>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" (click)="goToBooking(post.id, $event)">Buy tickets</button>
     </div>
   </a>
   }

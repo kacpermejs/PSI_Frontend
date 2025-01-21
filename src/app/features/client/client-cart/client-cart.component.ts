@@ -1,6 +1,6 @@
 import {CommonModule, NgFor} from '@angular/common';
 import {Component} from '@angular/core';
-import {EventInfo} from '@core/models/EventInfo';
+import {EventPost} from '@core/models/events/EventPost';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
@@ -11,7 +11,7 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './client-cart.component.scss'
 })
 export class ClientCartComponent {
-  cartItems: { event: EventInfo; quantity: number }[] = [];
+  cartItems: { event: EventPost; quantity: number }[] = [];
 
   constructor() {
     this.cartItems = [
@@ -22,7 +22,7 @@ export class ClientCartComponent {
           description: 'A night of amazing music.',
           eventStartDate: "11.02.2025",
           thumbnailUrl: 'https://via.placeholder.com/150'
-        } as EventInfo, // Explicitly casting to EventInfo
+        } as EventPost, // Explicitly casting to EventInfo
         quantity: 2
       },
       {
@@ -32,7 +32,7 @@ export class ClientCartComponent {
           description: 'Explore stunning artworks.',
           eventStartDate: "11.02.2025",
           thumbnailUrl: 'https://via.placeholder.com/150'
-        } as EventInfo, // Explicitly casting to EventInfo
+        } as EventPost, // Explicitly casting to EventInfo
         quantity: 1
       }
     ];

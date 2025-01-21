@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { EventInfo } from '@core/models/EventInfo';
-import { Observable, of } from 'rxjs';
+import { EventPost } from '@core/models/events/EventPost';
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientEventService {
   private http = inject(HttpClient);
-  private apiUrl = '/api/event-service/event-posts';
+  private apiUrl = '/api/event-service';
 
   constructor() {}
 
-  getEventPosts(): Observable<EventInfo[]> {
-    return this.http.get<EventInfo[]>(this.apiUrl);
+  getEventPosts(): Observable<EventPost[]> {
+    return this.http.get<EventPost[]>(this.apiUrl + '/events');
   }
 }

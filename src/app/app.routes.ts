@@ -19,6 +19,10 @@ export const routes: Routes = [
     path: 'cart',
     loadComponent: () => import('./features/client/client-cart/client-cart.component').then((m) => m.ClientCartComponent)
   },
+  {
+    path: 'booking/:id',
+    loadChildren: () => import('./features/client/ticket-booking/ticket-booking.routes').then( (d) => d.BOOKING_ROUTES)
+  },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '**', component: PageNotFoundComponent},
 ];
