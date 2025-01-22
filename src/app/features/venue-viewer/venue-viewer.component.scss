@@ -1,0 +1,17 @@
+.schematic-viewer {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.schematic-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.schematic-object {
+  display: inline-block;
+}

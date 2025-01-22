@@ -1,4 +1,4 @@
-import { VenueSchematic } from "./VenueSchematic";
+import { VenueSchematicDTO } from "./VenueSchematicDTO";
 
 export interface EventDetails {
   id: number;
@@ -9,6 +9,6 @@ export interface EventDetails {
   saleStartDate: string; // Use `Date` if you want strict typing for dates
   eventStartDate: string;
   saleEndDate: string;
-  venueSchematic: VenueSchematic;
+  venueSchematic: VenueSchematicDTO;
 
 }

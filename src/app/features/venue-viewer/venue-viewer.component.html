@@ -1,0 +1,27 @@
+<div #viewer class="schematic-viewer">
+  <div class="schematic-content" [ngStyle]="contentStyles">
+    <ng-container *ngIf="schematicData$ | async as schematic">
+      <ng-container *ngFor="let object of schematic.schematicObjects">
+        <div
+          *ngTemplateOutlet="renderObjectTemplate; context: { object: object, parent: { x: 0, y: 0 } }"
+        ></div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #renderObjectTemplate let-object="object" let-parent="parent">
+  <div
+    class="schematic-object"
+    [ngStyle]="getStyles(object, parent)"
+  >
+    <ng-container *ngFor="let child of object.children">
+      <ng-container
+        *ngTemplateOutlet="
+          renderObjectTemplate;
+          context: { object: child, parent: { x: parent.x + object.x, y: parent.y + object.y } }
+        "
+      ></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
