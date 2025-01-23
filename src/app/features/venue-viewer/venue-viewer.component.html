@@ -1,27 +1,60 @@
-<div #viewer class="schematic-viewer">
-  <div class="schematic-content" [ngStyle]="contentStyles">
-    <ng-container *ngIf="schematicData$ | async as schematic">
-      <ng-container *ngFor="let object of schematic.schematicObjects">
-        <div
-          *ngTemplateOutlet="renderObjectTemplate; context: { object: object, parent: { x: 0, y: 0 } }"
-        ></div>
-      </ng-container>
-    </ng-container>
-  </div>
-</div>
-
-<ng-template #renderObjectTemplate let-object="object" let-parent="parent">
-  <div
-    class="schematic-object"
-    [ngStyle]="getStyles(object, parent)"
+<div
+  class="venue-viewer"
+  #viewer
+  (mousemove)="mouseMoved($event)"
+  (mousedown)="startMouseDrag($event)"
+  (mouseup)="endMouseDrag()"
+  (mouseleave)="endMouseDrag()"
+  (wheel)="onZoom($event)"
+>
+  <!-- SVG Canvas -->
+  <svg
+    [attr.width]="viewerWidth"
+    [attr.height]="viewerHeight"
+    style="border: 1px solid #ccc; background-color: #f9f9f9"
   >
-    <ng-container *ngFor="let child of object.children">
-      <ng-container
-        *ngTemplateOutlet="
-          renderObjectTemplate;
-          context: { object: child, parent: { x: parent.x + object.x, y: parent.y + object.y } }
-        "
-      ></ng-container>
-    </ng-container>
-  </div>
-</ng-template>
+    <!-- Transform and apply scaling to the entire group -->
+    <g [attr.transform]="'translate(' + originX + ',' + originY + ') scale(' + zoomLevel + ')'">
+      <!-- Sections -->
+      <ng-container *ngFor="let section of (simplifiedData$ | async)">
+        <g [attr.transform]="'translate(' + section.x + ',' + section.y + ')'">
+          <rect
+            width="200"
+            height="100"
+            fill="lightblue"
+            stroke="blue"
+            [attr.transform]="'rotate(' + section.angle + ')'"
+          ></rect>
+          <text x="10" y="20" fill="black">{{ section.label }}</text>
+
+          <!-- Rows -->
+          <ng-container *ngFor="let row of section.children">
+            <g [attr.transform]="'translate(' + row.x + ',' + row.y + ')'">
+              <rect
+                width="180"
+                height="20"
+                fill="lightgreen"
+                stroke="green"
+                [attr.transform]="'rotate(' + row.angle + ')'"
+              ></rect>
+              <text x="10" y="15" fill="black">{{ row.name }}</text>
+
+              <!-- Seats -->
+              <ng-container *ngFor="let seat of row.children">
+                <circle
+                  [attr.cx]="seat.x"
+                  [attr.cy]="seat.y"
+                  r="5"
+                  [attr.fill]="isSelected(seat.id) ? 'yellow' : 'red'"
+                  stroke="darkred"
+                  (click)="toggleSeatSelection(seat.id)"
+                  style="cursor: pointer"
+                ></circle>
+              </ng-container>
+            </g>
+          </ng-container>
+        </g>
+      </ng-container>
+    </g>
+  </svg>
+</div>
