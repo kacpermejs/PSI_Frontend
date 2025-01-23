@@ -19,8 +19,8 @@
       <ng-container *ngFor="let section of (simplifiedData$ | async)">
         <g [attr.transform]="'translate(' + section.x + ',' + section.y + ')'">
           <rect
-            width="200"
-            height="100"
+            [attr.width]="section.width"
+            [attr.height]="section.height"
             fill="lightblue"
             stroke="blue"
             [attr.transform]="'rotate(' + section.angle + ')'"
@@ -31,8 +31,8 @@
           <ng-container *ngFor="let row of section.children">
             <g [attr.transform]="'translate(' + row.x + ',' + row.y + ')'">
               <rect
-                width="180"
-                height="20"
+                [attr.width]="row.width"
+                [attr.height]="row.height"
                 fill="lightgreen"
                 stroke="green"
                 [attr.transform]="'rotate(' + row.angle + ')'"
@@ -42,9 +42,10 @@
               <!-- Seats -->
               <ng-container *ngFor="let seat of row.children">
                 <circle
+                  [attr.transform]="'translate(' + seat.x + ',' + seat.y + ')'"
                   [attr.cx]="seat.x"
                   [attr.cy]="seat.y"
-                  r="5"
+                  [attr.r]="seat.width / 2"
                   [attr.fill]="isSelected(seat.id) ? 'yellow' : 'red'"
                   stroke="darkred"
                   (click)="toggleSeatSelection(seat.id)"

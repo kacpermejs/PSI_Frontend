@@ -7,6 +7,8 @@ export interface SchematicObject {
   showLabel: boolean;
   x: number;
   y: number;
+  width: number;
+  height: number;
   angle: number;
   layer: number;
   children: SchematicObject[];
