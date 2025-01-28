@@ -1,9 +1,8 @@
-// account.component.ts
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ControlService } from '@core/services/control/control.service';
-import { UserCustom } from '@core/models/UserCustom';
-import { UserRole } from '@core/models/UserRole';  // assuming you need this for the default role
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ControlService} from '@core/services/control/control.service';
+import {UserCustom} from '@core/models/UserCustom';
+import {UserRole} from '@core/models/UserRole';
 
 @Component({
   selector: 'app-account',
@@ -24,7 +23,8 @@ export class AccountComponent implements OnInit {
 
   public UserRole = UserRole;
 
-  constructor(private controlService: ControlService) {}
+  constructor(private controlService: ControlService) {
+  }
 
   ngOnInit(): void {
     this.getUserData();
@@ -35,12 +35,13 @@ export class AccountComponent implements OnInit {
     if (storedProfile) {
       try {
         this.user = JSON.parse(storedProfile) as UserCustom;
-        console.log("User odczytany z local storage:");
-        console.log(this.user);
-
       } catch (error) {
-        console.error('Error parsing stored user profile:', error);
+        console.error('Error parsing local storage user profile:', error);
       }
     }
+  }
+
+  getUserRole(role: UserRole): string {
+    return UserRole[role];
   }
 }
