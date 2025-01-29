@@ -10,6 +10,9 @@ RUN npm run build
 
 # Stage 2
 FROM nginx:latest
+
+RUN apk update && apk add -y gettext
+
 COPY --from=build /usr/local/app/dist/psi-frontend/browser /usr/share/nginx/html
 
 # script for environment configuration loading
