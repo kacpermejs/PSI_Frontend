@@ -22,8 +22,10 @@ export class AppComponent implements OnInit {
       .setConfig()
       .then(() =>
         console.log(`App is running in ${this.configService.readConfig().Environment} environment!`)
-      ).then(() =>
-        console.log(this.configService.readConfig().Cognito)
+      ).then(() => {
+          console.log("Cognito config:")
+          console.log(this.configService.readConfig().Cognito)
+        }
       );
 
     this.checkHealth();

@@ -5,7 +5,15 @@ import { HttpClient } from '@angular/common/http';
 //Move this type to a shared folder
 export interface AppConfig {
   Environment: string;
-  Cognito: any;
+  Cognito: CognitoConfig;
+  backEndIpAddress: string
+  backEndPort: number
+}
+
+export interface CognitoConfig {
+  region: string;
+  userPoolId: string
+  userPoolClientId: string
 }
 
 @Injectable({
@@ -15,7 +23,13 @@ export class ConfigService {
   //Default, if config files missing
   private configuration: AppConfig = {
     Environment: 'DEV',
-    Cognito: null
+    Cognito: {
+      region: "",
+      userPoolId: "",
+      userPoolClientId: ""
+    },
+    backEndIpAddress: "localhost",
+    backEndPort: 8080
   };
 
   private http: HttpClient;
