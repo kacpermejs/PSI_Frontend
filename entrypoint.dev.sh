@@ -11,4 +11,9 @@ if [[ $ENVIRONMENT = "Production" ]]; then
    cp /usr/src/app/src/config/app-config.prod.json /usr/src/app/src/app-config.json
 fi
 
+envsubst < /usr/src/app/src/app-config.json > /usr/src/app/src/app-config-final.json
+
+# Move the final config file back to the correct location
+mv /usr/src/app/src/app-config-final.json /usr/src/app/src/app-config.json
+
 npm run dev

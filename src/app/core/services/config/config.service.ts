@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 //Move this type to a shared folder
 export interface AppConfig {
   Environment: string;
+  Cognito: any;
 }
 
 @Injectable({
@@ -14,6 +15,7 @@ export class ConfigService {
   //Default, if config files missing
   private configuration: AppConfig = {
     Environment: 'DEV',
+    Cognito: null
   };
 
   private http: HttpClient;

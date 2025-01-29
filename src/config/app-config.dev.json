@@ -1,3 +1,8 @@
 {
-    "Environment": "DEV"
+    "Environment": "DEV",
+    "Cognito": {
+        "region": "${AWS_REGION}",
+        "userPoolId": "${AWS_USER_POOL_ID}",
+        "userPoolClientId": "${COGNITO_APP_CLIENT_ID}"
+    }
 }
