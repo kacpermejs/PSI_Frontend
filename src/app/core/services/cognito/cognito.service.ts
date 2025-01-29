@@ -63,8 +63,7 @@ export class CognitoService {
       const currentSession = await fetchAuthSession();
 
       if (currentSession?.tokens) {
-        // User is already signed in, sign them out first
-        // moze jeszcze clear local storage
+        this.controlService.cleanAll();
         await signOut();
       }
 

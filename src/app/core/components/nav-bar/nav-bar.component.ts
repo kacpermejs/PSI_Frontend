@@ -29,8 +29,6 @@ export class NavBarComponent {
 
   ngOnInit(): void {
     this.controlService.getRole().subscribe(userRole => {
-      console.log("Rola w navbar:", userRole);
-      console.log(typeof userRole)
       //todo jakoś dziwnie ten enum działa
       if (typeof userRole !== "number") {
         switch (userRole) {
@@ -50,8 +48,6 @@ export class NavBarComponent {
             userRole = UserRole.Guest;
         }
       }
-      console.log(userRole)
-      console.log(ROLE_NAVBAR_CONFIG[userRole])
       this.menuItems = ROLE_NAVBAR_CONFIG[userRole] || ROLE_NAVBAR_CONFIG[UserRole.Guest];
     });
   }

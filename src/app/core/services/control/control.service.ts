@@ -72,7 +72,6 @@ export class ControlService {
 
   getRole(): Observable<UserRole> {
     // const roleAgain = this.roleSubject.getValue() ? UserRole[this.roleSubject.getValue() as keyof typeof UserRole] : UserRole.Guest;
-    console.log("Wartość control service: " + this.roleSubject);
     return this.roleSubject.asObservable();
   }
 
