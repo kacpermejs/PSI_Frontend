@@ -23,7 +23,9 @@ export class LoginComponent {
   alertMessage: string = '';
   showAlert: boolean = false;
 
-  constructor(private router: Router, private cognitoService: CognitoService, private controlService: ControlService) {
+  constructor(private router: Router,
+              private cognitoService: CognitoService,
+              private controlService: ControlService) {
     console.log("LOGIN constructor:");
   }
 
@@ -34,6 +36,12 @@ export class LoginComponent {
 
   private closeAlert() {
     this.showAlert = false;
+  }
+
+  public goToRegister() {
+    this.controlService.setRegister(true);
+    this.controlService.setLogin(false);
+    this.router.navigate(['/register']);
   }
 
   signInWithCognito() {
@@ -52,7 +60,7 @@ export class LoginComponent {
 
               this.cognitoService.getUserData().then((data) => {
                 if (data) {
-                  console.log("Zapisywanie atrybutów usera");
+                  console.log("Save user profile");
                   const userProfile: UserCustom = {
                     email: data.email || '',
                     name: data.name || '',
@@ -61,13 +69,18 @@ export class LoginComponent {
                     phone_number: data.phone_number || '',
                     role: data['custom:role'] as UserRole || UserRole.Client,
                   };
+                  const roleString = data['custom:role'];
+                  const roleEnum = UserRole[roleString as keyof typeof UserRole];
+                  this.controlService.setRole(roleEnum);
+                  console.log("Role assigned in logging: " + data['custom:role']);
                   console.log(userProfile);
                   localStorage.setItem('userProfile', JSON.stringify(userProfile));
                 }
               })
               this.controlService.setUserName(this.userName);
-              this.router.navigate(["/events"]);
               this.controlService.setLogin(false);
+              this.controlService.setIsLoggedIn(true);
+              this.router.navigate(["/events"]);
             } else {
               console.log("getAuthData()")
             }

@@ -54,7 +54,8 @@
                 }"
                 class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
               >
-                {{ user.role === UserRole.Client ? 'CLIENT' : user.role === UserRole.Manager ? 'MANAGER' : 'EMPLOYEE' }}
+<!--                {{UserRole[user.role]}}-->
+                {{this.role}}
               </span>
             </div>
           </div>

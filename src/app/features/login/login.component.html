@@ -74,7 +74,16 @@
             </svg>
           </button>
         </div>
-
+        <!-- Register Redirect -->
+        <p class="text-center text-gray-600 text-sm">
+          Don't have an account?
+          <button
+            (click)="goToRegister()"
+            class="text-blue-600 font-medium hover:underline"
+          >
+            Register
+          </button>
+        </p>
         <button
           (click)="signInWithCognito()"
           class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"

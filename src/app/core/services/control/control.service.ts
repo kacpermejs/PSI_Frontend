@@ -1,15 +1,20 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {UserRole} from '@core/models/UserRole';
-import {User} from '../../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ControlService {
+  private roleSubject: BehaviorSubject<UserRole>;
+  private isLoggedInSubject: BehaviorSubject<boolean>;
 
   constructor() {
     console.log("Control service constructor")
+    const role = localStorage.getItem('role');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    this.roleSubject = new BehaviorSubject(role ? UserRole[role as keyof typeof UserRole] : UserRole.Guest);
+    this.isLoggedInSubject = new BehaviorSubject(isLoggedIn ? JSON.parse(isLoggedIn) : false);
   }
 
   private toLogin = new BehaviorSubject<boolean>(false);
@@ -44,11 +49,31 @@ export class ControlService {
     return this.topicSubscription.asObservable()
   }
 
-
   // -------------------------------------
 
   setLogin(bool: boolean) {
     this.toLogin.next(bool);
+  }
+
+  setIsLoggedIn(bool: boolean) {
+    localStorage.setItem('isLoggedIn', JSON.stringify(bool));
+    this.isLoggedInSubject.next(bool);
+  }
+
+  getIsLoggedIn(): Observable<boolean> {
+    const isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+    return this.isLoggedInSubject.asObservable()
+  }
+
+  setRole(role: UserRole) {
+    localStorage.setItem('role', role.toString());
+    this.roleSubject.next(role);
+  }
+
+  getRole(): Observable<UserRole> {
+    // const roleAgain = this.roleSubject.getValue() ? UserRole[this.roleSubject.getValue() as keyof typeof UserRole] : UserRole.Guest;
+    console.log("Wartość control service: " + this.roleSubject);
+    return this.roleSubject.asObservable();
   }
 
   setRegister(bool: boolean) {
@@ -63,12 +88,8 @@ export class ControlService {
     this.userName.next(username);
   }
 
-  setRole(role: UserRole) {
-    this.userName.next(UserRole[role]);
-  }
-
-  getRole() {
-    return this.role;
+  getUserName(): Observable<string> {
+    return this.userName.asObservable();
   }
 
   setJWTToken(token: string) {
@@ -79,4 +100,7 @@ export class ControlService {
     this.topicSubscription.next(topic);
   }
 
+  cleanAll() {
+    localStorage.clear()
+  }
 }

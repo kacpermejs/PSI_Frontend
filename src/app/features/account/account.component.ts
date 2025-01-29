@@ -18,8 +18,9 @@ export class AccountComponent implements OnInit {
     family_name: '',
     birthdate: '',
     phone_number: '',
-    role: UserRole.Client
+    role: UserRole.Guest
   };
+  role: string = ''
 
   public UserRole = UserRole;
 
@@ -35,13 +36,10 @@ export class AccountComponent implements OnInit {
     if (storedProfile) {
       try {
         this.user = JSON.parse(storedProfile) as UserCustom;
+        this.role = this.user.role.toString();
       } catch (error) {
         console.error('Error parsing local storage user profile:', error);
       }
     }
-  }
-
-  getUserRole(role: UserRole): string {
-    return UserRole[role];
   }
 }

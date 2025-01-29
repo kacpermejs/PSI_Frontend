@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '@core/models/User';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
 import {CognitoService} from '@core/services/cognito/cognito.service';
 import {NgIf} from '@angular/common';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {ControlService} from '@core/services/control/control.service';
 import {UserRole} from '@core/models/UserRole';
 
@@ -18,13 +18,8 @@ import {UserRole} from '@core/models/UserRole';
 export class RegisterComponent implements OnInit {
   public UserRole = UserRole;
   user: User = {} as User;
-
-  // dopoki nie zakonczy sie proces rejestracji, widoczne będzie okno
-  isConfirmed: boolean = false;
-  // czy teraz nalezy weryfikować kodem
+  isConfirmed: boolean = false; // dopoki nie zakonczy sie proces rejestracji, widoczne będzie okno
   confirmRegistration: boolean = false;
-
-
   alertMessage: string = '';
   showAlert: boolean = false;
 
@@ -91,5 +86,4 @@ export class RegisterComponent implements OnInit {
     this.controlService.setLogin(true);
     this.router.navigate(['/login']);
   }
-
 }

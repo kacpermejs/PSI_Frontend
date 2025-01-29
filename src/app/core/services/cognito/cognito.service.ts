@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Amplify} from 'aws-amplify';
 import {
-  signUp,
   confirmSignUp,
-  signIn,
   fetchAuthSession,
+  fetchUserAttributes,
   getCurrentUser,
+  signIn,
   signOut,
-  fetchUserAttributes
+  signUp
 } from 'aws-amplify/auth';
 import {User} from '../../models/User'
-import {BehaviorSubject, Observable, map, catchError, of} from 'rxjs';
 import {ControlService} from '../control/control.service';
 import {environment} from '../../../../environments/environment'
 import {UserRole} from '@core/models/UserRole';
@@ -32,9 +31,6 @@ export class CognitoService {
     console.log("\nCOGNITO SERVICE-----------------------");
     console.log(environment.Cognito);
     console.log("\nCOGNITO SERVICE-----------------------");
-    console.log(environment);
-    console.log("ENVENVENVENVENV");
-
   }
 
   public handleSignUp(user: User): Promise<any> {
@@ -92,11 +88,9 @@ export class CognitoService {
   }
 
   public handleAuthDate(): void {
-
     console.log("handle Auth Data.............")
 
     fetchAuthSession().then(data => {
-      //console.log(data.tokens?.accessToken.toString());
       console.log(" data from token ");
       console.log(data);
 
@@ -108,4 +102,15 @@ export class CognitoService {
     });
     return;
   }
+
+  public async signOut(): Promise<void> {
+    try {
+      await signOut();
+      console.log("User signed out successfully.");
+    } catch (error) {
+      console.error("Error signing out:", error);
+      throw error;
+    }
+  }
+
 }
