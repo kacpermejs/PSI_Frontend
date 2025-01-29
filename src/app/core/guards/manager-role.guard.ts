@@ -1,17 +1,19 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { UserRole } from '@core/models/UserRole';
-import { AuthService } from '@core/services/auth/auth.service';
+import {inject} from '@angular/core';
+import {CanActivateFn, Router} from '@angular/router';
+import {UserRole} from '@core/models/UserRole';
+import {ControlService} from '@core/services/control/control.service';
+import {map, tap} from 'rxjs/operators';
 
 export const managerRoleGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService)
-  const router = inject(Router)
-
-  if (authService.getRole() === UserRole.Manager) {
-    return true;
-  } else {
-    router.navigate(['/forbidden']);
-    return false;
-  }
-
+  const controlService = inject(ControlService);
+  const router = inject(Router);
+  return true; //todo
+  // return controlService.getRole().pipe(
+  //   map(role => role === UserRole.Manager),
+  //   tap(isManager => {
+  //     if (!isManager) {
+  //       router.navigate(['/forbidden']);
+  //     }
+  //   })
+  // );
 };

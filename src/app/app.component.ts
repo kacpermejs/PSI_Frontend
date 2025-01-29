@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   title = 'PSI_Frontend';
 
   configService = inject(ConfigService);
-  healthCheckService = inject(HealthCheckService)
+  healthCheckService = inject(HealthCheckService);
 
   ngOnInit(): void {
     this.configService

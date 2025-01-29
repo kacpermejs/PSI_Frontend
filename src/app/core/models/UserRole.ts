@@ -1,5 +1,6 @@
 export enum UserRole {
   Client,
   Manager,
-  Employee
+  Employee,
+  Guest
 }

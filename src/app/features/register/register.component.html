@@ -1,0 +1,157 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <!-- Error Alert -->
+    <div
+      *ngIf="showAlert"
+      class="mb-4 flex items-center justify-center rounded-lg bg-red-50 border border-red-200 p-4"
+    >
+      <h2 class="text-red-700 text-center font-semibold text-lg">
+        ERROR: {{ alertMessage }}
+      </h2>
+    </div>
+
+    <!-- Register Form -->
+    <div *ngIf="!isConfirmed">
+      <!-- Header -->
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Register</h2>
+        <p class="text-gray-600 text-sm">
+          Register your account using the information below
+        </p>
+      </div>
+
+      <!-- Form -->
+      <div class="space-y-4">
+        <!-- Name -->
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="user.name"
+          placeholder="Name"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <!-- Family Name -->
+        <input
+          type="text"
+          name="family_name"
+          [(ngModel)]="user.family_name"
+          placeholder="Family Name"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <!-- Email -->
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="user.email"
+          placeholder="Email address*"
+          autocomplete="off"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <!-- Birthdate -->
+        <input
+          type="date"
+          name="birthdate"
+          [(ngModel)]="user.birthdate"
+          placeholder="Birthdate"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <!-- Phone Number -->
+        <input
+          type="tel"
+          name="phoneNumbers"
+          [(ngModel)]="user.phone_number"
+          placeholder="Phone Number (e.g. +1234567890)"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <!-- Role -->
+        <select
+          [(ngModel)]="user.role"
+          class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option [ngValue]="UserRole.Client">Client</option>
+          <option [ngValue]="UserRole.Manager">Manager</option>
+          <option [ngValue]="UserRole.Employee">Employee</option>
+        </select>
+        <!-- Password -->
+        <div class="relative">
+          <input
+            [type]="user.showPassword ? 'text' : 'password'"
+            name="password"
+            placeholder="Password*"
+            [(ngModel)]="user.password"
+            class="w-full px-4 py-2 text-gray-800 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="button"
+            (click)="user.showPassword = !user.showPassword"
+            class="absolute right-2 top-2 text-gray-600 hover:text-gray-900"
+          >
+            <svg
+              *ngIf="!user.showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12h.01M12 12h.01M9 12h.01M4.318 6.318A9.953 9.953 0 003 12c0 2.485.902 4.745 2.318 6.318M19.682 17.682A9.953 9.953 0 0021 12c0-2.485-.902-4.745-2.318-6.318M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <svg
+              *ngIf="user.showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 3l18 18M8.12 8.122A9.978 9.978 0 003 12c0 2.485.902 4.745 2.318 6.318m2.835-2.835A3 3 0 0112 15a3 3 0 013-3m0-6a9.978 9.978 0 016.318 2.318M3 12c0 2.485.902 4.745 2.318 6.318M12 15c.263 0 .519-.024.772-.071m-2.9-2.9l6.126 6.127"
+              />
+            </svg>
+          </button>
+        </div>
+        <!-- Login Redirect -->
+        <p class="text-center text-gray-600 text-sm">
+          Already a member?
+          <button
+            (click)="goToLogin()"
+            class="text-blue-600 font-medium hover:underline"
+          >
+            Login
+          </button>
+        </p>
+        <!-- Register Button -->
+        <button
+          (click)="signUpWithCognito()"
+          class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Register
+        </button>
+      </div>
+    </div>
+
+    <!-- verify -->
+
+    <div *ngIf="confirmRegistration">
+
+      <div class="header">
+        <h2>Verify</h2>
+        <h4>Verify account by entering code sent to provided email.</h4>
+      </div>
+
+      <div class="form">
+        <input type="text" name="code" [(ngModel)]="user.code" placeholder="Verification code">
+        <button (click)="confirmSignUp()"> Verify</button>
+      </div>
+
+    </div>
+  </div>
+</div>

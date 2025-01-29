@@ -15,4 +15,9 @@ export const ROLE_NAVBAR_CONFIG = {
     {label: 'Cart', route: '/cart'},
     {label: 'Account', route: '/account'},
   ],
+  [UserRole.Guest]: [
+    {label: 'Events', route: '/events'},
+    {label: 'Login', route: '/login'},
+    {label: 'Register', route: '/register'},
+  ],
 };
