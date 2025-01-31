@@ -33,11 +33,10 @@
               <rect
                 [attr.width]="row.width"
                 [attr.height]="row.height"
-                fill="lightgreen"
-                stroke="green"
+                fill="transparent"
                 [attr.transform]="'rotate(' + row.angle + ')'"
               ></rect>
-              <text x="10" y="15" fill="black">{{ row.name }}</text>
+              <text x="10" y="15" fill="black"></text>
 
               <!-- Seats -->
               <ng-container *ngFor="let seat of row.children">
@@ -46,8 +45,7 @@
                   [attr.cx]="seat.x"
                   [attr.cy]="seat.y"
                   [attr.r]="seat.width / 2"
-                  [attr.fill]="isSelected(seat.id) ? 'yellow' : 'red'"
-                  stroke="darkred"
+                  [attr.fill]="isSelected(seat.id) ? 'green' : isAvailable(seat) ? 'yellow' : 'grey'"
                   (click)="toggleSeatSelection(seat.id)"
                   style="cursor: pointer"
                 ></circle>

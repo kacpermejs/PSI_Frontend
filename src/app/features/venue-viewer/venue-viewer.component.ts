@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventDetails } from '@core/models/events/EventDetails';
-import { SchematicMetadata } from '@core/models/venue-schematic/Metadata';
+import { TicketMetadata } from '@core/models/venue-schematic/Metadata';
 import { EventDetailsStoreService } from 'app/features/client/event-details-store/event-details-store.service';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { SchematicService } from './services/schematic-service/schematic.service';
@@ -195,6 +195,12 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
 
   isSelected(seatId: number): boolean {
     return this.selectedSeats.has(seatId);
+  }
+
+  isAvailable(seat: SchematicObject): boolean {
+    return seat.metadata.some(
+      (d) => d.type === 'ticket' && (d as TicketMetadata).available
+    );
   }
 
   ngOnDestroy(): void {}
