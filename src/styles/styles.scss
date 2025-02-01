@@ -48,6 +48,7 @@ p.small {
 }
 
 /* Buttons */
+/* Buttons */
 .btn {
   @apply inline-block px-6 py-3 rounded-md font-medium text-center transition duration-300;
 }
@@ -56,19 +57,31 @@ p.small {
   @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring focus:ring-blue-300;
 }
 
+.btn-primary:disabled {
+  @apply bg-gray-400 text-gray-200 cursor-not-allowed opacity-70;
+}
+
 .btn-secondary {
   @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring focus:ring-gray-400;
+}
+
+.btn-secondary:disabled {
+  @apply bg-gray-400 text-gray-200 cursor-not-allowed opacity-70;
 }
 
 .btn-danger {
   @apply bg-red-600 text-white hover:bg-red-700 focus:ring focus:ring-red-300;
 }
 
+.btn-danger:disabled {
+  @apply bg-gray-400 text-gray-200 cursor-not-allowed opacity-70;
+}
+
 .btn-outline {
   @apply border border-gray-300 text-gray-700 hover:bg-gray-100 focus:ring focus:ring-gray-300;
 }
 
-.btn-disabled {
+.btn-outline:disabled {
   @apply bg-gray-400 text-gray-200 cursor-not-allowed opacity-70;
 }
 

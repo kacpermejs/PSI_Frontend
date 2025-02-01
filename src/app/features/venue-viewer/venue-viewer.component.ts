@@ -3,19 +3,23 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   inject,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventDetails } from '@core/models/events/EventDetails';
-import { TicketMetadata } from '@core/models/venue-schematic/Metadata';
+import { SeatMetadata, SectionMetadata, TicketMetadata } from '@core/models/venue-schematic/Metadata';
 import { EventDetailsStoreService } from 'app/features/client/event-details-store/event-details-store.service';
 import { map, Observable, of, switchMap, tap } from 'rxjs';
 import { SchematicService } from './services/schematic-service/schematic.service';
 import { VenueSchematic } from '@core/models/venue-schematic/VenueSchematic';
 import { SchematicObject } from '@core/models/venue-schematic/SchematicObject';
+import { OrderData } from '@core/models/order/OrderData';
+import { TicketStoreService } from '../client/ticket-booking/services/ticket-store/ticket-store.service';
 
 @Component({
   selector: 'app-venue-viewer',
@@ -25,6 +29,9 @@ import { SchematicObject } from '@core/models/venue-schematic/SchematicObject';
 })
 export class VenueViewerComponent implements OnInit, OnDestroy {
   @ViewChild('viewer') viewer!: ElementRef;
+
+  ticketOrderStore = inject(TicketStoreService)
+
   route = inject(ActivatedRoute);
   eventStoreService = inject(EventDetailsStoreService);
   schematicService = inject(SchematicService);
@@ -37,8 +44,6 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
   schematicData$!: Observable<VenueSchematic | null>;
   simplifiedData$!: Observable<SchematicObject[] | null>;
 
-  selectedSeats: Set<number> = new Set();
-
   originX: number = 0; // Origin X offset (relative to center)
   originY: number = 0; // Origin Y offset (relative to center)
   viewerWidth: number = 0; // Viewer width
@@ -50,7 +55,8 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
   initialOriginX: number = 0; // Initial origin X before drag
   initialOriginY: number = 0;
   
-  zoomLevel: number = 1;
+  zoomLevel: number = 0.5;
+  zoomBreakpoint = 1;
   maxZoomLevel = 100;
   minZoomLevel = 0.2
   zoomInFactor = 1.1;
@@ -108,8 +114,8 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
     this.viewerHeight = viewerBounds.height;
 
     // Center the origin
-    this.originX = this.viewerWidth / 2;
-    this.originY = this.viewerHeight / 2;
+    this.originX = this.viewerWidth / 4;
+    this.originY = 200;
 
     this.cdr.detectChanges();
   }
@@ -185,16 +191,36 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleSeatSelection(seatId: number) {
-    if (this.selectedSeats.has(seatId)) {
-      this.selectedSeats.delete(seatId);
-    } else {
-      this.selectedSeats.add(seatId);
-    }
+  private getSeatMetadata(seat: SchematicObject): SeatMetadata | undefined {
+    return seat.metadata
+      .find((d) => d.type === 'seat') as SeatMetadata | undefined;
+  }
+
+  private getSectionMetadata(seat: SchematicObject): SectionMetadata | undefined {
+    return seat.metadata
+      .find((d) => d.type === 'section') as SectionMetadata | undefined;
+  }
+
+  private getTicketMetadata(seat: SchematicObject): TicketMetadata | undefined {
+    return seat.metadata
+      .find((d) => d.type === 'ticket') as TicketMetadata | undefined;
+  }
+
+  toggleSeatSelection(obj: SchematicObject) {
+    
+    let ticketData = this.getTicketMetadata(obj);
+    let seatData = this.getSeatMetadata(obj);
+    let sectionData = this.getSectionMetadata(obj);
+
+    if (!ticketData || !ticketData.available)
+      return;
+
+    this.ticketOrderStore.toggleSelection(obj.id, {ticket: ticketData, seat: seatData, section: sectionData});
+    
   }
 
   isSelected(seatId: number): boolean {
-    return this.selectedSeats.has(seatId);
+    return this.ticketOrderStore.isSelected(seatId);
   }
 
   isAvailable(seat: SchematicObject): boolean {

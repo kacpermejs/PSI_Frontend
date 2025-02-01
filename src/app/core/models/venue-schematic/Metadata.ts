@@ -20,3 +20,12 @@ export interface TicketMetadata extends SchematicMetadata {
   available: boolean;
   price: number;
 }
+
+export interface SectionMetadata extends SchematicMetadata {
+  type: string;
+  id: number;
+  capacity?: number;
+  label: string;
+}
+
+

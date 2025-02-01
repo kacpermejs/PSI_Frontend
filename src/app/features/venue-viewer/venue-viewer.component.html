@@ -11,7 +11,7 @@
   <svg
     [attr.width]="viewerWidth"
     [attr.height]="viewerHeight"
-    style="border: 1px solid #ccc; background-color: #f9f9f9"
+    class="border border-solid rounded border-gray-300 bg-[#DDDDDD] shadow-lg"
   >
     <!-- Transform and apply scaling to the entire group -->
     <g [attr.transform]="'translate(' + originX + ',' + originY + ') scale(' + zoomLevel + ')'">
@@ -21,37 +21,48 @@
           <rect
             [attr.width]="section.width"
             [attr.height]="section.height"
-            fill="lightblue"
-            stroke="blue"
+            [attr.fill]="zoomLevel <= zoomBreakpoint ? '#1F3FA2' : 'white'"
             [attr.transform]="'rotate(' + section.angle + ')'"
           ></rect>
-          <text x="10" y="20" fill="black">{{ section.label }}</text>
+
+          @if(zoomLevel <= zoomBreakpoint) {
+            <text
+              [attr.x]="section.width / 2"
+              [attr.y]="section.height / 2"
+              text-anchor="middle"
+              fill="white"
+              alignment-baseline="middle">
+              {{ section.label }}
+            </text>
+          }
 
           <!-- Rows -->
-          <ng-container *ngFor="let row of section.children">
-            <g [attr.transform]="'translate(' + row.x + ',' + row.y + ')'">
-              <rect
-                [attr.width]="row.width"
-                [attr.height]="row.height"
-                fill="transparent"
-                [attr.transform]="'rotate(' + row.angle + ')'"
-              ></rect>
-              <text x="10" y="15" fill="black"></text>
+          @if(zoomLevel > zoomBreakpoint) {
+            <ng-container *ngFor="let row of section.children">
+              <g [attr.transform]="'translate(' + row.x + ',' + row.y + ')'">
+                <rect
+                  [attr.width]="row.width"
+                  [attr.height]="row.height"
+                  fill="transparent"
+                  [attr.transform]="'rotate(' + row.angle + ')'"
+                ></rect>
+                <text x="10" y="15" fill="black"></text>
 
-              <!-- Seats -->
-              <ng-container *ngFor="let seat of row.children">
-                <circle
-                  [attr.transform]="'translate(' + seat.x + ',' + seat.y + ')'"
-                  [attr.cx]="seat.x"
-                  [attr.cy]="seat.y"
-                  [attr.r]="seat.width / 2"
-                  [attr.fill]="isSelected(seat.id) ? 'green' : isAvailable(seat) ? 'yellow' : 'grey'"
-                  (click)="toggleSeatSelection(seat.id)"
-                  style="cursor: pointer"
-                ></circle>
-              </ng-container>
-            </g>
-          </ng-container>
+                <!-- Seats -->
+                <ng-container *ngFor="let seat of row.children">
+                  <circle
+                    [attr.transform]="'translate(' + seat.x + ',' + seat.y + ')'"
+                    [attr.cx]="seat.x"
+                    [attr.cy]="seat.y"
+                    [attr.r]="seat.width / 2"
+                    [attr.fill]="isSelected(seat.id) ? '#048851' : isAvailable(seat) ? '#1F3FA2' : '#BFBFBF'"
+                    (click)="toggleSeatSelection(seat)"
+                    style="cursor: pointer"
+                  ></circle>
+                </ng-container>
+              </g>
+            </ng-container>
+          }
         </g>
       </ng-container>
     </g>

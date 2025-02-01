@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { VenueViewerComponent } from "app/features/venue-viewer/venue-viewer.component";
+import { TicketSelectorComponent } from "./components/ticket-selector/ticket-selector.component";
 
 export const BOOKING_ROUTES: Routes = [
   {
@@ -8,7 +8,7 @@ export const BOOKING_ROUTES: Routes = [
     children: [
       {
         path: 'viewer',
-        component: VenueViewerComponent
+        component: TicketSelectorComponent
       }
     ]
   }
