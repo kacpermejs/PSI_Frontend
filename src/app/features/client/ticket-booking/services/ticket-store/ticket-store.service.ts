@@ -69,4 +69,8 @@ export class TicketStoreService {
     this.selectedSeatsSubject.next(new Map());
     localStorage.removeItem(this.localStorageKey);
   }
+
+  getSnapshot() {
+    return this.selectedSeatsSubject.getValue();
+  }
 }

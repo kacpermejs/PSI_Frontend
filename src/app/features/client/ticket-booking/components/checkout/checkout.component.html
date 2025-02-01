@@ -1,0 +1,23 @@
+<h1>Cart:</h1>
+
+<div>
+  <app-ticket-cart></app-ticket-cart>
+  <hr class="my-4">
+  <h2>Summary:</h2>
+  @if (tickets$ | async; as tickets) {
+    <div class="text-6xl font-semibold text-green-600 mb-4">{{summary(tickets)}} {{currency(tickets)}}</div>
+  }
+  <hr class="my-4">
+  <h1>Select payment method:</h1>
+  <div class="flex flex-wrap justify-center gap-4 p-6 mt-4 rounded bg-[#DDDDDD]">
+    <button class="btn btn-primary payment-button" (click)="handleCash()">
+      Cash
+    </button>
+    <button class="btn btn-primary payment-button" (click)="handleBlik()">
+      Blik
+    </button>
+    <button class="btn btn-primary payment-button" (click)="handleOnlinePaymentPlatform()">
+      Online Payment Platform
+    </button>
+  </div>
+</div>

@@ -1,20 +1,3 @@
 <div class="container">
-  <div *ngIf="loading$ | async">Loading...</div>
-
-  <div *ngIf="error$ | async as error; else content">
-    <div class="error-message">{{ error }}</div>
-  </div>
-
-  <ng-template #content>
-    <div *ngIf="eventDetails$ | async as eventDetails; else noDetails">
-      <h1>{{ eventDetails.title }}</h1>
-      <p>{{ eventDetails.description }}</p>
-    </div>
-  </ng-template>
-
-  <ng-template #noDetails>
-    <div>No event details available</div>
-  </ng-template>
-
   <router-outlet></router-outlet>
 </div>

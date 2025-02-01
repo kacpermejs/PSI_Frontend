@@ -26,8 +26,4 @@ export class TicketCartComponent implements OnInit {
   trackByTicketId(index: number, ticket: { key: number, value: OrderData }): number {
     return ticket.key;
   }
-
-  navigateToPayment() {
-    
-  }
 }

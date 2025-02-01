@@ -1,9 +1,4 @@
 <div class="border border-solid rounded border-gray-300 bg-[#DDDDDD] p-4 shadow-lg h-full w-full">
-
-  @if ((tickets$ | async | keyvalue); as data) {
-    <button class="btn btn-primary mb-4" [disabled]="!data?.length" (click)="navigateToPayment()">To payment</button>
-  }
-
   @for (item of (tickets$ | async | keyvalue); track item.key;) { 
 
     <div class="bg-white shadow-lg rounded-lg p-4 w-full border border-gray-200 mb-2" *ngIf="item.value as ticket">
