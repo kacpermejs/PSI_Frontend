@@ -4,6 +4,9 @@ import { TicketStoreService } from '../../services/ticket-store/ticket-store.ser
 import { OrderData } from '@core/models/order/OrderData';
 import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { OrderService } from './services/order-service/order.service';
+import { OrderTicketDTO } from '@core/models/order/OrderTicketDTO';
+import { CognitoService } from '@core/services/cognito/cognito.service';
 
 @Component({
   selector: 'app-checkout',
@@ -14,6 +17,9 @@ import { CommonModule } from '@angular/common';
 export class CheckoutComponent implements OnInit {
   ticketStore = inject(TicketStoreService);
   tickets$?: Observable<OrderData[]>
+
+  orderService = inject(OrderService)
+  cognito = inject(CognitoService)
   
   ngOnInit(): void {
     this.tickets$ = this.ticketStore.selectedSeats$.pipe(
@@ -21,15 +27,29 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-  //TODO
   handleCash() {
     let data = this.getOrderData();
-    throw new Error('Method not implemented.');
+
+    this.cognito.getUserData().then(user => {
+      const tickets = data.map(d => {
+        return {
+          id: d.ticket.id,
+          price: d.ticket.price
+        } as OrderTicketDTO;
+      })
+  
+      this.orderService.createOrder({
+        tickets: tickets,
+        username: user.name //FIXME: this should be handled by token processing
+      });
+    })
   }
+
   handleBlik() {
     let data = this.getOrderData();
     throw new Error('Method not implemented.');
   }
+  
   handleOnlinePaymentPlatform() {
     let data = this.getOrderData();
     throw new Error('Method not implemented.');

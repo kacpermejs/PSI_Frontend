@@ -112,4 +112,13 @@ export class CognitoService {
     }
   }
 
+  public async getToken(): Promise<string | null> {
+    try {
+      const session = await fetchAuthSession();
+      return session.tokens?.accessToken.toString() || null;
+    } catch (error) {
+      console.error('Error fetching Cognito token:', error);
+      return null;
+    }
+  }
 }
