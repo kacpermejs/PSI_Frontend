@@ -4,7 +4,7 @@ import {managerRoleGuard} from '@core/guards/manager-role.guard';
 import {ForbiddenComponent} from './features/forbidden/forbidden.component';
 
 export const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '', redirectTo: '/events', pathMatch: 'full'},
   {
     path: 'manager',
     canActivate: [managerRoleGuard],

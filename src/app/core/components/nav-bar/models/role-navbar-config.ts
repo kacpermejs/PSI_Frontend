@@ -1,6 +1,19 @@
 import {UserRole} from "@core/models/UserRole";
 
-export const ROLE_NAVBAR_CONFIG = {
+export enum ButtonType {
+  None = 'none',
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Danger = 'danger'
+}
+
+export interface NavbarConfig {
+  label: string;
+  route: string;
+  button?: ButtonType;
+}
+
+export const ROLE_NAVBAR_CONFIG: Record<UserRole, NavbarConfig[]> = {
   [UserRole.Client]: [
     {label: 'Events', route: '/events'},
     {label: 'Cart', route: '/cart'},
@@ -17,7 +30,6 @@ export const ROLE_NAVBAR_CONFIG = {
   ],
   [UserRole.Guest]: [
     {label: 'Events', route: '/events'},
-    {label: 'Login', route: '/login'},
-    {label: 'Register', route: '/register'},
+    {label: 'Sign in', route: '/login', button: ButtonType.Primary},
   ],
 };

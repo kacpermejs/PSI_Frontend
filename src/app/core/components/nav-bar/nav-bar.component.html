@@ -6,21 +6,37 @@
     </div>
 
     <!-- Desktop Navbar Links -->
-    <div class="hidden md:flex space-x-4">
+    <div class="hidden md:flex space-x-4 items-center">
       <ng-container *ngFor="let item of menuItems; let i = index">
-        <a
-          [routerLink]="item.route"
-          routerLinkActive="underline text-white"
-          class="text-gray-400 hover:text-white"
-        >
-          {{ item.label }}
-        </a>
+        @if(item.button) {
+          <button
+            [routerLink]="item.route"
+            class="btn"
+            [ngClass]="{
+              'btn-primary': item.button === 'primary',
+              'btn-secondary': item.button === 'secondary',
+              'btn-danger': item.button === 'danger',
+            }"
+            >
+            {{ item.label }}
+          </button>
+        }
+        @else {
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="underline text-white"
+            class="text-gray-400 hover:text-white"
+          >
+            {{ item.label }}
+          </a>
+        }
+        
       </ng-container>
 
       <!-- Log Out Button (Visible only when logged in) -->
       <button *ngIf="isLoggedIn$ | async"
               (click)="logOut()"
-              class="text-gray-400 hover:text-white border border-gray-400 px-3 py-1 rounded">
+              class="btn btn-outline">
         Log Out
       </button>
     </div>
@@ -52,22 +68,38 @@
   <!-- Mobile Menu -->
   <div
     *ngIf="isMenuOpen"
-    class="md:hidden bg-gray-800 text-gray-400 p-4 space-y-4"
+    class="md:hidden bg-gray-800 text-gray-400 p-4 flex flex-col flex-wrap space-y-4"
   >
     <ng-container *ngFor="let item of menuItems; let i = index">
-      <a
-        [routerLink]="item.route"
-        routerLinkActive="underline text-white"
-        class="block hover:text-white"
-      >
-        {{ item.label }}
-      </a>
+      @if(item.button) {
+        <button
+          [routerLink]="item.route"
+          routerLinkActive="underline text-white"
+          class="btn flex-grow-1"
+          [ngClass]="{
+            'btn-primary': item.button === 'primary',
+            'btn-secondary': item.button === 'secondary',
+            'btn-danger': item.button === 'danger',
+          }"
+          >
+          {{ item.label }}
+        </button>
+      }
+      @else {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="underline text-white"
+          class="text-gray-400 hover:text-white block flex-grow w-full py-2"
+        >
+          {{ item.label }}
+        </a>
+      }
     </ng-container>
 
     <!-- Logout Button -->
     <button *ngIf="isLoggedIn$ | async"
             (click)="logOut()"
-            class="text-gray-400 hover:text-white border border-gray-400 px-3 py-1 rounded">
+            class="btn btn-outline flex-shrink-0">
       Log Out
     </button>
   </div>

@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {Component} from '@angular/core';
 import {Router, RouterModule} from '@angular/router';
-import {ROLE_NAVBAR_CONFIG} from './models/role-navbar-config';
+import {NavbarConfig, ROLE_NAVBAR_CONFIG} from './models/role-navbar-config';
 import {ControlService} from '@core/services/control/control.service';
 import {Observable} from 'rxjs';
 import {CognitoService} from '@core/services/cognito/cognito.service';
@@ -18,7 +18,7 @@ import {UserRole} from '@core/models/UserRole';
 })
 export class NavBarComponent {
   isMenuOpen = false;
-  menuItems: any = [];
+  menuItems: NavbarConfig[] = [];
   isLoggedIn$: Observable<boolean>;
 
   constructor(private controlService: ControlService,
