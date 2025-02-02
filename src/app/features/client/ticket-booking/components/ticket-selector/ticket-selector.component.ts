@@ -26,6 +26,6 @@ export class TicketSelectorComponent implements OnInit {
   }
 
   navigateToCheckout() {
-    this.router.navigate(['../checkout'], { relativeTo: this.route });
+    this.router.navigate(['/cart']);
   }
 }

@@ -8,12 +8,13 @@ import { OrderDTO } from '@core/models/order/OrderDTO';
 export class OrderService {
 
   http = inject(HttpClient)
-  baseUrl = "http://api/order-service"
+  baseUrl = "/api/order-service"
 
   createOrder(order: OrderDTO) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(this.baseUrl + '/create', order, { headers }).subscribe(
-      console.log
+    this.http.post(this.baseUrl + '/order/create', order, { headers }).subscribe(
+      console.log //TODO navigate to success page or show error
     );
+
   }
 }

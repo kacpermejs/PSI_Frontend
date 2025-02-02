@@ -2,6 +2,7 @@ import {CommonModule} from '@angular/common';
 import {Component, inject, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NavBarComponent} from '@core/components/nav-bar/nav-bar.component';
+import { CognitoService } from '@core/services/cognito/cognito.service';
 import {ConfigService} from '@core/services/config/config.service';
 import {HealthCheckService} from '@core/services/health-check/health-check.service';
 
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
 
   configService = inject(ConfigService);
   healthCheckService = inject(HealthCheckService);
+  cognito = inject(CognitoService);
 
   ngOnInit(): void {
     this.configService
@@ -23,8 +25,8 @@ export class AppComponent implements OnInit {
       .then(() =>
         console.log(`App is running in ${this.configService.readConfig().Environment} environment!`)
       ).then(() => {
-          console.log("Cognito config:")
-          console.log(this.configService.readConfig().Cognito)
+          console.log("Initializing Cognito...")
+          this.cognito.initialize();
         }
       );
 

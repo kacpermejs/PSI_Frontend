@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Amplify} from 'aws-amplify';
 import {
   confirmSignUp,
@@ -11,15 +11,27 @@ import {
 } from 'aws-amplify/auth';
 import {User} from '../../models/User'
 import {ControlService} from '../control/control.service';
-import {environment} from '../../../../environments/environment'
 import {UserRole} from '@core/models/UserRole';
+import { ConfigService } from '../config/config.service';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CognitoService {
 
+  configService = inject(ConfigService)
+
   constructor(private controlService: ControlService) {
+  }
+
+  public initialize() {
+    const environment = this.configService.readConfig();
+    if (!environment) {
+      console.log("Configuration loading...");
+      return;
+    }
+
     console.log(environment.Cognito);
 
     Amplify.configure({
@@ -105,6 +117,15 @@ export class CognitoService {
   public async signOut(): Promise<void> {
     try {
       await signOut();
+      this.controlService.setAuthenticated(false);
+      this.controlService.setIsLoggedIn(false);
+      this.controlService.setUserName('');
+      this.controlService.setRole(UserRole.Guest);
+      this.controlService.setJWTToken('');
+      this.controlService.cleanAll();
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('role');
+      localStorage.removeItem('userProfile');
       console.log("User signed out successfully.");
     } catch (error) {
       console.error("Error signing out:", error);

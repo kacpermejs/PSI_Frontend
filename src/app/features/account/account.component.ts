@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlService} from '@core/services/control/control.service';
 import {UserCustom} from '@core/models/UserCustom';
 import {UserRole} from '@core/models/UserRole';
+import { CognitoService } from '@core/services/cognito/cognito.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -23,6 +25,9 @@ export class AccountComponent implements OnInit {
   role: string = ''
 
   public UserRole = UserRole;
+  
+  cognitoService = inject(CognitoService);
+  router = inject(Router);
 
   constructor(private controlService: ControlService) {
   }
@@ -40,6 +45,15 @@ export class AccountComponent implements OnInit {
       } catch (error) {
         console.error('Error parsing local storage user profile:', error);
       }
+    }
+  }
+
+  async logOut(): Promise<void> {
+    try {
+      await this.cognitoService.signOut();
+      this.router.navigate(["/"]);
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   }
 }

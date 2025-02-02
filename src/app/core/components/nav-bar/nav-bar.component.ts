@@ -53,26 +53,6 @@ export class NavBarComponent {
   }
 
 
-  async logOut(): Promise<void> {
-    try {
-      await this.cognitoService.signOut();  // Ensure sign-out is completed
-      this.controlService.setAuthenticated(false);
-      this.controlService.setIsLoggedIn(false);
-      this.controlService.setUserName('');
-      this.controlService.setRole(UserRole.Guest);
-      this.controlService.setJWTToken('');
-      this.controlService.cleanAll();
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userProfile');
-
-      this.router.navigate(["/login"]); // Redirect to login page
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  }
-
-
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }

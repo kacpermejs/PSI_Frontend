@@ -1,4 +1,4 @@
-<div class="border border-solid rounded border-gray-300 bg-[#DDDDDD] p-4 shadow-lg h-full w-full">
+<div class="border border-solid rounded border-gray-300 bg-[#DDDDDD] p-4 shadow-lg h-full overflow-y-auto">
   @for (item of (tickets$ | async | keyvalue); track item.key;) { 
 
     <div class="bg-white shadow-lg rounded-lg p-4 w-full border border-gray-200 mb-2" *ngIf="item.value as ticket">
@@ -19,7 +19,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>{{ticket.section?.label}}</td>
+              <td>{{getSection(ticket)}}</td>
               <td>{{ticket.seat?.row}}</td>
               <td>{{ticket.seat?.column}}</td>
             </tr>
@@ -29,7 +29,7 @@
       
       <!-- Footer -->
       <div class="flex justify-between items-center border-t pt-2">
-        <span class="text-lg font-semibold text-green-600">{{ticket.ticket.price}}</span>
+        <span class="text-lg font-semibold text-green-600">{{ticket.ticket.price}} {{currency(ticket)}}</span>
         <button class="bg-red-500 text-white p-2 rounded-full hover:bg-red-600" aria-label="Remove Ticket" (click)="removeTicket(item.key)">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M6 8a1 1 0 011-1h6a1 1 0 011 1v7a1 1 0 01-1 1H7a1 1 0 01-1-1V8zm5-3a1 1 0 00-2 0H7a1 1 0 000 2h6a1 1 0 000-2h-2z" clip-rule="evenodd" />

@@ -32,13 +32,6 @@
         }
         
       </ng-container>
-
-      <!-- Log Out Button (Visible only when logged in) -->
-      <button *ngIf="isLoggedIn$ | async"
-              (click)="logOut()"
-              class="btn btn-outline">
-        Log Out
-      </button>
     </div>
 
     <!-- Mobile Hamburger Icon -->
@@ -95,12 +88,5 @@
         </a>
       }
     </ng-container>
-
-    <!-- Logout Button -->
-    <button *ngIf="isLoggedIn$ | async"
-            (click)="logOut()"
-            class="btn btn-outline flex-shrink-0">
-      Log Out
-    </button>
   </div>
 </nav>
