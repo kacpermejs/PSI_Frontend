@@ -89,8 +89,8 @@ export class VenueViewerComponent implements OnInit, OnDestroy {
     this.schematicData$ = this.eventDetails$.pipe(
       switchMap( (eventDetails) => {
         if (eventDetails) {
-          return this.schematicService.getEmptySchematic(
-            eventDetails.venueSchematic.id
+          return this.schematicService.getSchematicForEvent(
+            eventDetails.id
           );
         } else {
           return of(null)

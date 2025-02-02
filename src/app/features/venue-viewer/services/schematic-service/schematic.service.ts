@@ -12,7 +12,7 @@ export class SchematicService {
 
   constructor() { }
 
-  getEmptySchematic(id: number): Observable<VenueSchematic> {
+  getSchematicForEvent(id: number): Observable<VenueSchematic> {
       return this.http.get<VenueSchematic>(this.apiUrl + '/venue-schematic/' + id).pipe(
         tap(console.log)
       );
