@@ -22,8 +22,7 @@ export class OrderService {
 
   createOrder(order: OrderDTO) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    this.http.post(this.baseUrl + '/order/create', order, { headers }).subscribe(
-      console.log //TODO navigate to success page or show error
-    );
+    return this.http.post(this.baseUrl + '/order/create', order, { headers })
+
   }
 }
