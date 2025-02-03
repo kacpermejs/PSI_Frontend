@@ -37,7 +37,7 @@ export const routes: Routes = [
   },
   {
     path: 'order/status/:id',
-    loadChildren: () => import('./features/client/order-page/order-page.component').then((m) => m.OrderPageComponent)
+    loadComponent: () => import('./features/client/order-page/order-page.component').then((m) => m.OrderPageComponent)
   },
   {path: 'forbidden', component: ForbiddenComponent},
   {path: '**', component: PageNotFoundComponent},
