@@ -17,4 +17,10 @@ export class OrderService {
     );
 
   }
+
+  createOrder(order: OrderDTO) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.baseUrl + '/order/create', order, { headers })
+
+  }
 }
