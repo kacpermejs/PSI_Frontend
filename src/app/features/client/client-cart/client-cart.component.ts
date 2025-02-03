@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
 import { OrderService } from './services/order.service';
 import { TicketStoreService } from '../ticket-booking/services/ticket-store/ticket-store.service';
 import { TicketCartComponent } from '../ticket-booking/components/ticket-cart/ticket-cart.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-cart',
@@ -22,27 +22,41 @@ export class ClientCartComponent implements OnInit {
   orderService = inject(OrderService)
   cognito = inject(CognitoService)
   router = inject(Router);
+  route = inject(ActivatedRoute);
+
+  orderId?: number;
   
   ngOnInit(): void {
     this.tickets$ = this.ticketStore.selectedSeats$.pipe(
       map(m => Array.from(m.values()))
     );
+
+    this.route.paramMap.subscribe(r => {
+      const id = r.get('orderId')
+
+      if (!id)
+        throw new Error("NO ID");
+      this.orderId = parseInt(id);
+    })
   }
 
   //TODO navigate to success
   handleCash() {
-    let data = this.getOrderData();
-    throw new Error('Method not implemented.');
+    if (!this.orderId)
+      throw new Error('No id');
+    this.orderService.makePayment({orderId: this.orderId, paymentType: "Onsite"})
   }
 
   handleBlik() {
-    let data = this.getOrderData();
-    throw new Error('Method not implemented.');
+    if (!this.orderId)
+      throw new Error('No id');
+    this.orderService.makePayment({orderId: this.orderId, paymentType: "Online"})
   }
   
   handleOnlinePaymentPlatform() {
-    let data = this.getOrderData();
-    throw new Error('Method not implemented.');
+    if (!this.orderId)
+      throw new Error('No id');
+    this.orderService.makePayment({orderId: this.orderId, paymentType: "Online"})
   }
 
   summary(order: OrderData[]) {

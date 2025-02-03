@@ -2,5 +2,5 @@
 
 export interface MakePaymentDTO{
   orderId: number,
-  paymentId: string
+  paymentType: string
 }

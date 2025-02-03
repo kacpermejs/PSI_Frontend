@@ -50,8 +50,13 @@ export class TicketSelectorComponent implements OnInit {
         tickets: tickets,
         username: user.sub //FIXME: this should be handled by token processing
       }).subscribe({
-        next: () => {
-          this.router.navigate(['/cart']);
+        next: (o) => {
+          console.log('Order:');
+          console.log(o);
+
+          const orderId = o.orderId;
+          
+          this.router.navigate(['/cart/' + orderId]);
         },
         error: (e) => {
           console.error(e);
