@@ -44,7 +44,9 @@ export class ClientCartComponent implements OnInit {
   handleCash() {
     if (!this.orderId)
       throw new Error('No id');
-    this.orderService.makePayment({orderId: this.orderId, paymentType: "Onsite"})
+    this.orderService.makePayment({orderId: this.orderId, paymentType: "Onsite"}).subscribe(r => {
+      this.router.navigate(['order/status', this.orderId]);
+    });
   }
 
   handleBlik() {
