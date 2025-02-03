@@ -7,6 +7,7 @@ import { Observable, map } from 'rxjs';
 import { OrderService } from './services/order.service';
 import { TicketStoreService } from '../ticket-booking/services/ticket-store/ticket-store.service';
 import { TicketCartComponent } from '../ticket-booking/components/ticket-cart/ticket-cart.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client-cart',
@@ -20,6 +21,7 @@ export class ClientCartComponent implements OnInit {
 
   orderService = inject(OrderService)
   cognito = inject(CognitoService)
+  router = inject(Router);
   
   ngOnInit(): void {
     this.tickets$ = this.ticketStore.selectedSeats$.pipe(
@@ -27,25 +29,10 @@ export class ClientCartComponent implements OnInit {
     );
   }
 
+  //TODO navigate to success
   handleCash() {
     let data = this.getOrderData();
-
-    this.cognito.getUserData().then(user => {
-      const tickets = data.map(d => {
-        return {
-          id: d.ticket.id,
-          price: d.ticket.price
-        } as OrderTicketDTO;
-      })
-
-      console.log(user);
-      
-  
-      this.orderService.createOrder({
-        tickets: tickets,
-        username: user.sub //FIXME: this should be handled by token processing
-      });
-    })
+    throw new Error('Method not implemented.');
   }
 
   handleBlik() {
